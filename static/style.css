@@ -33,3 +33,6 @@ button{
 .alert-text{
     color: rgb(241, 94, 94);
 }
+table{
+    border-radius: 10px;
+}

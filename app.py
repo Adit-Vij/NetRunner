@@ -30,5 +30,6 @@ def start_logging():
 def get_contacted_ips():
     return jsonify(contacted_ips)
 
+#Main
 if __name__ =='__main__':
     app.run(debug=True)

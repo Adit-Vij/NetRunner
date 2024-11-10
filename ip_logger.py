@@ -3,7 +3,7 @@ import logging
 
 logging.basicConfig(filename="external_ips_contacted.log", level = logging.INFO, format = '%(asctime)s-%(message)s')
 
-contacted_ips =  []
+contacted_ips =  [] #Global List
 
 def log_contacted_ip(packet):
 

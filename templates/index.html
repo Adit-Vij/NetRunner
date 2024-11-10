@@ -36,7 +36,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById("contacted-ips-table");
-                    tableBody.innerHTML = "";  // Clear table
+                    tableBody.innerHTML = "";
 
                     data.forEach(ip => {
                         const row = document.createElement("tr");

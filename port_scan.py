@@ -32,4 +32,4 @@ def scan_ports(start,end):
 
     for thread in thread_list:
         thread.join()
-    return open_ports
+    return open_ports #Global List
