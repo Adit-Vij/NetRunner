@@ -1,0 +1,35 @@
+html{
+    font-family: "Host Grotesk", sans-serif;
+}
+p{
+    font-size: 24px;
+}
+label{
+    font-size: 24px;
+}
+.p-guide{
+    color:rgb(75, 75, 75);
+}
+.field_container{
+    margin: 10px;    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    width:100%
+}
+button{
+    font-size: 24px;
+}
+.button-go{
+    background-color: rgb(100, 100, 255);
+    color: white;
+    width: 40%;
+    padding:10px;
+    border: none;
+    border-radius: 10px;
+    display: block;
+}
+
+.alert-text{
+    color: rgb(241, 94, 94);
+}

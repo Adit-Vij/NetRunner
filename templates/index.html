@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NetRunner</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <style>
+            .spinner {
+                display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            vertical-align: middle;
+            }
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+            #port-scanner-loading {
+                display: none;
+            }
+        </style>
+        
+        <script>
+            function portScanerRangeLoading(){
+                document.getElementById("port-scanner-loading").style.display = "block";
+                document.querySelector(".button-go").disabled = true;
+                button.disabled = true;  
+            }
+            function fetchContactedIps() {
+            fetch("/get_contacted_ips")
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById("contacted-ips-table");
+                    tableBody.innerHTML = "";  // Clear table
+
+                    data.forEach(ip => {
+                        const row = document.createElement("tr");
+                        const cell = document.createElement("td");
+                        cell.textContent = ip;
+                        row.appendChild(cell);
+                        tableBody.appendChild(row);
+                    });
+                });
+            }
+
+            // Update contacted IPs table every 5 seconds
+            setInterval(fetchContactedIps, 5000);
+        </script>
+    </head>
+    <body>
+        <div class = "main-features">
+            <h1>Port Scanner</h1>
+            <hr>
+            <p class="p-guide">Custom Range</p>
+            <form method="POST" action="/port_scan" onsubmit="portScannerRangeLoading()">
+                <div class="field_container">
+                    <label for="start_port">Start Port:</label>
+                    <input type="number" id="start_port" name="start_port" required>
+                    <label for="end_port">End Port:</label>
+                    <input type="number" id="end_port" name="end_port" required><br>
+                </div>
+                <button type="submit" class="button-go">Scan Ports</button> 
+                
+                        
+            </form>
+            <p id="port-scanner-loading"><span class="spinner"></span></p>
+            {% if open_ports is not none %}
+                <h2 class="alert-text">Open Ports:</h2>
+                {% if open_ports %}
+                    <ul class="alert-text">
+                        {% for port in open_ports %}
+                            <li>Port {{ port }} is open</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No open ports found.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class = "main-features">
+            <h1>IP Logger (External)</h1>
+            <hr>
+            <form action="{{ url_for('start_logging') }}" method="post">
+                <button type="submit" class="button-go">Log IP External Addresses</button>
+            </form>
+            <h2>Contacted External IPs</h2> 
+            <table border="1">
+                <tr>
+                    <th>Contacted IP</th>
+                </tr>
+                <tbody id="contacted-ips-table">
+                    {% for ip in contacted_ips %}
+                        <tr>
+                            <td>{{ ip }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
